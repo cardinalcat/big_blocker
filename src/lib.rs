@@ -311,9 +311,9 @@ impl Blocker {
                 let output = tokio::process::Command::new("netsh").args(&[
                     "advfirewall",
                     "firewall",
-                    "rule",
                     "add",
-                    "name=\"Big Blocker\"",
+                    "rule",
+                    "name=\"BigBlocker\"",
                     "dir=out",
                     "action=deny",
                     "enable=yes",
@@ -323,7 +323,7 @@ impl Blocker {
                 if !output.status.success() {
                     let code = output.status.code().unwrap();
                     let stderr = String::from_utf8(output.stderr)?;
-                    return Err(BlockError::CommandFailed((stderr, code)));
+                    return Err(BlockError::CommandFailed((stdout, code)));
                 }
             }
         }
